@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopware 5→6 Migration | Professionell & Kosteneffizient</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #1a1a1a;
+            background: #ffffff;
+        }
+        
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header */
+        header {
+            padding: 60px 0 40px;
+            border-bottom: 1px solid #e5e5e5;
+        }
+        
+        .header-content {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+        
+        .photo-placeholder {
+            flex-shrink: 0;
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 48px;
+            font-weight: 600;
+            border: 4px solid #f8f9fa;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        
+        .header-text h1 {
+            font-size: 38px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 12px;
+            line-height: 1.2;
+        }
+        
+        .header-text .subtitle {
+            font-size: 20px;
+            color: #6b7280;
+            font-weight: 400;
+        }
+        
+        /* Hero Section */
+        .hero {
+            padding: 80px 0;
+            text-align: center;
+            background: linear-gradient(180deg, #ffffff 0%, #f9fafb 100%);
+        }
+        
+        .hero h2 {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+        
+        .hero .highlight {
+            color: #667eea;
+        }
+        
+        .hero p {
+            font-size: 22px;
+            color: #4b5563;
+            max-width: 800px;
+            margin: 0 auto 40px;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            margin-top: 50px;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 42px;
+            font-weight: 700;
+            color: #667eea;
+            display: block;
+        }
+        
+        .stat-label {
+            font-size: 16px;
+            color: #6b7280;
+            margin-top: 8px;
+        }
+        
+        /* Problem Section */
+        .problem {
+            padding: 80px 0;
+            background: #ffffff;
+        }
+        
+        .section-title {
+            font-size: 36px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 50px;
+            color: #1a1a1a;
+        }
+        
+        .problems-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .problem-card {
+            background: #fef2f2;
+            border-left: 4px solid #ef4444;
+            padding: 24px;
+            border-radius: 8px;
+        }
+        
+        .problem-card h3 {
+            font-size: 20px;
+            font-weight: 600;
+            color: #991b1b;
+            margin-bottom: 10px;
+        }
+        
+        .problem-card p {
+            color: #6b7280;
+            font-size: 16px;
+        }
+        
+        .urgency-box {
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            border: 2px solid #fca5a5;
+        }
+        
+        .urgency-box h3 {
+            font-size: 24px;
+            color: #991b1b;
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+        
+        .urgency-box p {
+            font-size: 18px;
+            color: #7f1d1d;
+        }
+        
+        /* Solution Section */
+        .solution {
+            padding: 80px 0;
+            background: #f9fafb;
+        }
+        
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+        
+        .benefit-card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            border-top: 3px solid #667eea;
+        }
+        
+        .benefit-icon {
+            font-size: 32px;
+            margin-bottom: 16px;
+        }
+        
+        .benefit-card h3 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #1a1a1a;
+        }
+        
+        .benefit-card p {
+            color: #6b7280;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+        
+        .benefit-card .savings {
+            color: #059669;
+            font-weight: 600;
+            font-size: 18px;
+            margin-top: 12px;
+            display: block;
+        }
+        
+        /* Comparison */
+        .comparison {
+            padding: 80px 0;
+            background: #ffffff;
+        }
+        
+        .comparison-table {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        
+        .comparison-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .comparison-row:last-child {
+            border-bottom: none;
+        }
+        
+        .comparison-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: 600;
+            font-size: 18px;
+        }
+        
+        .comparison-cell {
+            padding: 20px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .comparison-row:nth-child(even) {
+            background: #f9fafb;
+        }
+        
+        .check {
+            color: #059669;
+            font-size: 24px;
+        }
+        
+        .cross {
+            color: #dc2626;
+            font-size: 24px;
+        }
+        
+        /* CTA Section */
+        .cta {
+            padding: 80px 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+        }
+        
+        .cta h2 {
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        
+        .cta p {
+            font-size: 20px;
+            margin-bottom: 40px;
+            opacity: 0.95;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 16px 40px;
+            font-size: 18px;
+            font-weight: 600;
+            border-radius: 8px;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background: white;
+            color: #667eea;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.1);
+        }
+        
+        /* Footer */
+        footer {
+            padding: 40px 0;
+            text-align: center;
+            background: #1f2937;
+            color: #9ca3af;
+        }
+        
+        footer a {
+            color: #667eea;
+            text-decoration: none;
+        }
+        
+        footer a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .hero h2 {
+                font-size: 32px;
+            }
+            
+            .hero p {
+                font-size: 18px;
+            }
+            
+            .stats {
+                flex-direction: column;
+                gap: 30px;
+            }
+            
+            .problems-grid,
+            .benefits-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            /* Mobile comparison table - show as cards */
+            .comparison-table {
+                box-shadow: none;
+            }
+            
+            .comparison-header {
+                display: none;
+            }
+            
+            .comparison-row {
+                display: block;
+                background: white !important;
+                margin-bottom: 15px;
+                border-radius: 8px;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+                border: 1px solid #e5e7eb;
+            }
+            
+            .comparison-cell {
+                display: block;
+                padding: 12px 20px;
+                border-bottom: 1px solid #f3f4f6;
+            }
+            
+            .comparison-cell:last-child {
+                border-bottom: none;
+            }
+            
+            .comparison-cell:first-child {
+                background: #f9fafb;
+                font-weight: 600;
+                border-bottom: 2px solid #e5e7eb;
+            }
+            
+            .comparison-cell:nth-child(2)::before {
+                content: "Agentur: ";
+                font-weight: 600;
+                color: #6b7280;
+            }
+            
+            .comparison-cell:nth-child(3)::before {
+                content: "Mit mir: ";
+                font-weight: 600;
+                color: #667eea;
+            }
+            
+            .cta h2 {
+                font-size: 32px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="photo-placeholder">
+                    <!-- Replace this div with: <img src="your-photo.jpg" alt="Your Name" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;"> -->
+                    ?
+                </div>
+                <div class="header-text">
+                    <h1>Shopware 5→6 Migration</h1>
+                    <p class="subtitle">6-7-stellige Umsatz-Shops migriert | Prozesse aus 4 Agenturen | Persönliche Betreuung</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h2>Professionelle Migration.<br><span class="highlight">Ohne Agentur-Aufschlag.</span></h2>
+            <p>Qualität und Expertise einer Agentur – zu Freelancer-Konditionen. Direkter Kontakt, moderne Technologien, persönliche Verantwortung.</p>
+            
+            <div class="stats">
+                <div class="stat">
+                    <span class="stat-number">30-40%</span>
+                    <span class="stat-label">Kostenersparnis</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">€90/h</span>
+                    <span class="stat-label">Transparenter Stundensatz</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">4</span>
+                    <span class="stat-label">Agenturen Erfahrung</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problem Section -->
+    <section class="problem">
+        <div class="container">
+            <h2 class="section-title">Warum jetzt migrieren?</h2>
+            
+            <div class="problems-grid">
+                <div class="problem-card">
+                    <h3>⚠️ Support-Ende bereits überschritten</h3>
+                    <p>Shopware 5 Support endete am 31.07.2024. Keine Security-Updates mehr – GDPR-Strafen bis zu €20M möglich.</p>
+                </div>
+                
+                <div class="problem-card">
+                    <h3>💳 Payment-Provider steigen aus</h3>
+                    <p>PayPal, Klarna & Co. beenden SW5-Support. Ohne Migration können Ihre Kunden bald nicht mehr zahlen.</p>
+                </div>
+                
+                <div class="problem-card">
+                    <h3>📉 Verlust an Wettbewerbsfähigkeit</h3>
+                    <p>SW6 lädt 40% schneller = bessere Google-Rankings. Ihre Konkurrenz migriert bereits.</p>
+                </div>
+                
+                <div class="problem-card">
+                    <h3>📱 Mobile-First fehlt</h3>
+                    <p>65% Ihrer Kunden kaufen mobil. SW6 ist für Smartphones optimiert, nicht nur "responsive".</p>
+                </div>
+            </div>
+            
+            <div class="urgency-box">
+                <h3>🔥 Jeder Tag Verzögerung kostet Geld</h3>
+                <p>Veraltete Technologie = Sicherheitsrisiken + entgangene Umsätze + steigende Migrationskosten</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solution Section -->
+    <section class="solution">
+        <div class="container">
+            <h2 class="section-title">Mein Angebot: Das Beste aus beiden Welten</h2>
+            
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon">💰</div>
+                    <h3>30-40% günstiger</h3>
+                    <p>€90/h statt €120-150/h bei Agenturen. Keine Overhead-Kosten für Büros, Management oder Konferenzen.</p>
+                    <span class="savings">Ersparnis: €12.000+</span>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">🚀</div>
+                    <h3>Moderne AI-Tools</h3>
+                    <p>Cursor, GitHub Copilot, n8n Workflows. Traditionelle Agenturen: 300h. Mit AI-Tools: 200h.</p>
+                    <span class="savings">30% schneller</span>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">⚡</div>
+                    <h3>Daten-Migration in Rekordzeit</h3>
+                    <p>n8n API-Workflows statt Custom Plugins. Custom Fields Migration: 8-15h statt 40-80h.</p>
+                    <span class="savings">50-80% Zeit gespart</span>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">🎯</div>
+                    <h3>100% Projekt-Fokus</h3>
+                    <p>Ihr Projekt wird nicht für größere Kunden verschoben. Garantierte Deadline-Einhaltung.</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">👤</div>
+                    <h3>Direkter Kontakt</h3>
+                    <p>Ein Ansprechpartner für alles: Backend, Frontend, DevOps. Keine Kommunikation über 4 Abteilungen.</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">🔧</div>
+                    <h3>Flexible Team-Erweiterung</h3>
+                    <p>Bei Bedarf ziehe ich spezialisierte Freelancer hinzu (Design, Frontend). Sie zahlen nur bei Bedarf.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Comparison Section -->
+    <section class="comparison">
+        <div class="container">
+            <h2 class="section-title">Agentur vs. Freelancer – Der Vergleich</h2>
+            
+            <div class="comparison-table">
+                <div class="comparison-row comparison-header">
+                    <div class="comparison-cell"></div>
+                    <div class="comparison-cell">Agentur</div>
+                    <div class="comparison-cell">Mit mir</div>
+                </div>
+                
+                <div class="comparison-row">
+                    <div class="comparison-cell"><strong>Stundensatz</strong></div>
+                    <div class="comparison-cell">€120-150/h</div>
+                    <div class="comparison-cell">€90/h</div>
+                </div>
+                
+                <div class="comparison-row">
+                    <div class="comparison-cell"><strong>Overhead-Kosten</strong></div>
+                    <div class="comparison-cell"><span class="check">✓</span></div>
+                    <div class="comparison-cell"><span class="cross">✗</span></div>
+                </div>
+                
+                <div class="comparison-row">
+                    <div class="comparison-cell"><strong>Moderne AI-Tools</strong></div>
+                    <div class="comparison-cell"><span class="cross">✗</span></div>
+                    <div class="comparison-cell"><span class="check">✓</span></div>
+                </div>
+                
+                <div class="comparison-row">
+                    <div class="comparison-cell"><strong>Projekt-Priorisierung</strong></div>
+                    <div class="comparison-cell">Abhängig von Größe</div>
+                    <div class="comparison-cell">100% für Sie</div>
+                </div>
+                
+                <div class="comparison-row">
+                    <div class="comparison-cell"><strong>Direkter Entwickler-Kontakt</strong></div>
+                    <div class="comparison-cell"><span class="cross">✗</span></div>
+                    <div class="comparison-cell"><span class="check">✓</span></div>
+                </div>
+                
+                <div class="comparison-row">
+                    <div class="comparison-cell"><strong>Persönliche Verantwortung</strong></div>
+                    <div class="comparison-cell">Verteilt</div>
+                    <div class="comparison-cell">100%</div>
+                </div>
+                
+                <div class="comparison-row">
+                    <div class="comparison-cell"><strong>Flexible Zahlungsmodelle</strong></div>
+                    <div class="comparison-cell">Feste Pakete</div>
+                    <div class="comparison-cell">Stündlich</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <h2>Bereit für Ihre SW6-Migration?</h2>
+            <p>Kostenlose 30-Min Beratung. Ich zeige Ihnen live, wie ich mit Cursor & n8n arbeite.</p>
+            
+            <div class="cta-buttons">
+                <a href="#" class="btn btn-primary">📅 Termin vereinbaren</a>
+                <a href="https://linkedin.com/in/your-profile" class="btn btn-secondary" target="_blank">LinkedIn Profil</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Shopware Migration Services | <a href="mailto:ntolstoukhov@gmail.com">ntolstoukhov@gmail.com</a></p>
+            <p style="margin-top: 10px; font-size: 14px;">
+                <a href="impressum.html">Impressum</a> | <a href="datenschutz.html">Datenschutz</a>
+            </p>
+        </div>
+    </footer>
+</body>
+</html>
